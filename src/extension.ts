@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 type Element = {
-  awaits: boolean;
+  awaits: false | number;
   children?: Element[];
 };
 
@@ -10,13 +10,13 @@ const tree: Element[] = [
     awaits: false,
     children: [
       {
-        awaits: true,
+        awaits: 3,
       },
       {
-        awaits: false,
+        awaits: 2,
       },
       {
-        awaits: false,
+        awaits: 1,
       },
     ],
   },
@@ -55,8 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
     },
     async getTreeItem(indices) {
       const elem = getElement(indices);
-      if (elem.awaits) {
-        await Promise.resolve();
+      const awaits = elem.awaits;
+      if (typeof awaits === "number") {
+        await new Promise((ok) => setTimeout(ok, awaits));
       }
       const treeItem = new vscode.TreeItem(
         indices,
