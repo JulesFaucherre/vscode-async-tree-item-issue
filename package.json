@@ -1,0 +1,62 @@
+{
+  "name": "problem-with-async-tree-view-item",
+  "displayName": "problem-with-async-tree-view-item",
+  "description": "Show a problem with the VSCode async tree view item",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sidebar-with-async-tree-item",
+          "title": "CircleCI",
+          "icon": "$(find-collapsed)"
+        }
+      ]
+    },
+    "views": {
+      "sidebar-with-async-tree-item": [
+        {
+          "id": "sidebarWithAsyncTreeItem",
+          "name": "sidebar",
+          "contextualTitle": "Sidebar",
+          "icon": "$(find-collapsed)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "problem-with-async-tree-view-item.revealItem0/1",
+        "title": "Reveal item 0/1"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8"
+  }
+}
