@@ -34,14 +34,24 @@ function getElement(indices: string): Element {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+  const output = vscode.window.createOutputChannel("treeitem issue");
+  context.subscriptions.push(output);
+
   const treeDataProvider: vscode.TreeDataProvider<string> = {
     getChildren(indices) {
+      let ret: string[];
+
       if (indices === undefined) {
-        return tree.map((_, index) => `${index}`);
+        ret = tree.map((_, index) => `${index}`);
+      } else {
+        const element = getElement(indices);
+        const children = element.children ?? [];
+        ret = children.map((_, i) => `${indices}/${i}`);
       }
-      const element = getElement(indices);
-      const children = element.children ?? [];
-      return children.map((_, i) => `${indices}/${i}`);
+      output.appendLine(
+        `For element ${indices}, children return = ${ret.join(", ")}`
+      );
+      return ret;
     },
     async getTreeItem(indices) {
       const elem = getElement(indices);
